@@ -15,6 +15,9 @@ import { BaseSlashCommandParams, BaseSlashCommandReturnType, TrackMetadata } fro
 import { checkQueueCurrentTrack, checkQueueExists } from '../../../utils/validation/queueValidator';
 import { checkInVoiceChannel, checkSameVoiceChannel } from '../../../utils/validation/voiceChannelValidator';
 
+// autism
+import { translate } from 'bing-translate-api';
+
 class NowPlayingCommand extends BaseSlashCommandInteraction {
     constructor() {
         const data = new SlashCommandBuilder()
@@ -71,7 +74,7 @@ class NowPlayingCommand extends BaseSlashCommandInteraction {
                             `${displayEmbedProgressBar}\n\n ` +
                             `${displayQueueRepeatMode}\n\n`
                     )
-                    .addFields(this.getEmbedFields(currentTrack))
+                    .addFields(await this.getEmbedFields(currentTrack))
                     .setFooter({
                         text: tracksInQueueCount ? `${tracksInQueueCount} other tracks in the queue...` : ' '
                     })
@@ -95,8 +98,16 @@ class NowPlayingCommand extends BaseSlashCommandInteraction {
         return displayPlays;
     }
 
-    private getDisplayTrackAuthor(currentTrack: Track | undefined): string {
-        let author: string = currentTrack?.author ? currentTrack.author : 'Unavailable';
+    private async getDisplayTrackAuthor(currentTrack: Track | undefined): Promise<string> {
+        let autorReal = "";
+        await translate(currentTrack?.author ? currentTrack.author : 'Unavailable', "auto-detect", 'ro').then(res => {
+            autorReal = res.translation;
+            console.log(res);
+        }).catch(err => {
+            console.log(err);
+        });
+
+        let author: string = autorReal;
         if (author === 'cdn.discordapp.com') {
             author = 'Unavailable';
         }
@@ -165,11 +176,11 @@ class NowPlayingCommand extends BaseSlashCommandInteraction {
             : `**${this.embedOptions.icons.audioPlaying} Now Playing**`;
     };
 
-    private getEmbedFields = (currentTrack: Track): EmbedField[] => {
+    private getEmbedFields = async (currentTrack: Track): Promise<EmbedField[]> => {
         const fields: EmbedField[] = [
             {
                 name: '**Author**',
-                value: this.getDisplayTrackAuthor(currentTrack),
+                value: await this.getDisplayTrackAuthor(currentTrack),
                 inline: true
             },
             {
