@@ -173,7 +173,7 @@ class NowPlayingCommand extends BaseSlashCommandInteraction {
     private getDisplayTrackPlayingStatus = (queue: GuildQueue): string => {
         return queue.node.isPaused()
             ? '**Currently Paused**'
-            : `**${this.embedOptions.icons.audioPlaying} Now Playing**`;
+            : `**${this.embedOptions.icons.audioPlaying} În redare**`;
     };
 
     private getEmbedFields = async (currentTrack: Track): Promise<EmbedField[]> => {

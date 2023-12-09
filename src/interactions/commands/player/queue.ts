@@ -63,7 +63,7 @@ class QueueCommand extends BaseSlashCommandInteraction {
                 new EmbedBuilder()
                     .setAuthor(this.getEmbedQueueAuthor(interaction, queue))
                     .setDescription(
-                        `**${this.embedOptions.icons.audioPlaying} Now playing**\n` +
+                        `**${this.embedOptions.icons.audioPlaying} În redare**\n` +
                             `${await this.getFormattedTrackUrl(currentTrack)}\n` +
                             `**Requested by:** ${this.getDisplayTrackRequestedBy(currentTrack)}\n` +
                             `${this.getDisplayQueueProgressBar(queue)}\n\n` +

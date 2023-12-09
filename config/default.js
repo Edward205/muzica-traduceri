@@ -177,7 +177,7 @@ module.exports.ffmpegFilterOptions = {
             emoji: '🌸'
         },
         {
-            label: 'Ear rape',
+            label: 'Viol de ureche',
             value: 'earrape',
             description: 'Extremely loud and distorted audio.',
             emoji: '👂'

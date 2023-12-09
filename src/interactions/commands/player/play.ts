@@ -161,7 +161,7 @@ class PlayCommand extends BaseSlashCommandInteraction {
             const otherTracksString = `And **${searchResult.tracks.length}** more tracks... **\`/queue\`** to view all.`;
             message = `${this.embedOptions.icons.success} **Added playlist to queue**\n${trackUrl}\n\n${otherTracksString}`;
         } else if (queue.currentTrack === track && queue.tracks.data.length === 0) {
-            message = `**${this.embedOptions.icons.audioStartedPlaying} Now playing**\n${trackUrl}`;
+            message = `**${this.embedOptions.icons.audioStartedPlaying} În redare**\n${trackUrl}`;
         }
 
         logger.debug('Responding with success embed.');
