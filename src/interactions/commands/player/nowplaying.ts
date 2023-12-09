@@ -38,7 +38,7 @@ class NowPlayingCommand extends BaseSlashCommandInteraction {
 
         const tracksInQueueCount: number = queue.tracks.data.length;
         const currentTrack: Track = queue.currentTrack!;
-        const displayTrackUrl: string = this.getFormattedTrackUrl(currentTrack);
+        const displayTrackUrl: string = await this.getFormattedTrackUrl(currentTrack);
         const displayTrackRequestedBy: string = this.getDisplayTrackRequestedBy(currentTrack);
         const displayTrackPlayingStatus: string = this.getDisplayTrackPlayingStatus(queue);
         const displayQueueRepeatMode: string = this.getDisplayQueueRepeatMode(queue);

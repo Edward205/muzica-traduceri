@@ -6,6 +6,7 @@ import { BaseSlashCommandParams, BaseSlashCommandReturnType } from '../../../typ
 import { checkQueueExists } from '../../../utils/validation/queueValidator';
 import { checkInVoiceChannel, checkSameVoiceChannel } from '../../../utils/validation/voiceChannelValidator';
 import { formatDuration } from '../../../common/formattingUtils';
+import { translate } from 'bing-translate-api';
 
 class QueueCommand extends BaseSlashCommandInteraction {
     constructor() {
@@ -63,7 +64,7 @@ class QueueCommand extends BaseSlashCommandInteraction {
                     .setAuthor(this.getEmbedQueueAuthor(interaction, queue))
                     .setDescription(
                         `**${this.embedOptions.icons.audioPlaying} Now playing**\n` +
-                            `${this.getFormattedTrackUrl(currentTrack)}\n` +
+                            `${await this.getFormattedTrackUrl(currentTrack)}\n` +
                             `**Requested by:** ${this.getDisplayTrackRequestedBy(currentTrack)}\n` +
                             `${this.getDisplayQueueProgressBar(queue)}\n\n` +
                             `${this.getDisplayRepeatMode(queue.repeatMode)}` +

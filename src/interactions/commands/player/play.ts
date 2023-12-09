@@ -6,6 +6,7 @@ import { BaseSlashCommandParams, BaseSlashCommandReturnType } from '../../../typ
 import { checkVoicePermissionJoinAndTalk } from '../../../utils/validation/permissionValidator';
 import { transformQuery } from '../../../utils/validation/searchQueryValidator';
 import { checkInVoiceChannel, checkSameVoiceChannel } from '../../../utils/validation/voiceChannelValidator';
+import { translate } from 'bing-translate-api';
 
 class PlayCommand extends BaseSlashCommandInteraction {
     constructor() {
@@ -153,7 +154,7 @@ class PlayCommand extends BaseSlashCommandInteraction {
     ): Promise<Message> {
         logger.debug('Result found and added with player.play(), added to queue.');
         const queue: GuildQueue = useQueue(interaction.guild!.id)!;
-        const trackUrl = this.getDisplayTrackDurationAndUrl(track);
+        const trackUrl = await this.getDisplayTrackDurationAndUrl(track);
 
         let message = `${this.embedOptions.icons.success} **Added to queue**\n${trackUrl}`;
         if (searchResult.playlist) {

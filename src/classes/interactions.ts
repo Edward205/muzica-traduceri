@@ -26,6 +26,8 @@ import {
     BaseSlashCommandReturnType
 } from '../types/interactionTypes';
 import { Validator, ValidatorParams } from '../types/utilTypes';
+// autism
+import { translate } from 'bing-translate-api';
 
 abstract class BaseInteraction {
     embedOptions: EmbedOptions;
@@ -72,8 +74,16 @@ abstract class BaseInteraction {
         return durationFormat;
     }
 
-    protected getFormattedTrackUrl(track: Track): string {
-        const trackTitle = track.title ?? 'Title unavailable';
+    protected async getFormattedTrackUrl(track: Track): Promise <string> {
+        let titluReal = "";
+        await translate(track.title, "auto-detect", 'ro').then(res => {
+            titluReal = res.translation;
+            console.log(res);
+        }).catch(err => {
+            console.log(err);
+        });
+
+        const trackTitle = titluReal ?? 'Title unavailable';
         const trackUrl = track.url ?? track.raw.url;
         if (!trackTitle || !trackUrl) {
             return '**Unavailable**';
@@ -81,9 +91,9 @@ abstract class BaseInteraction {
         return `**[${trackTitle}](${trackUrl})**`;
     }
 
-    protected getDisplayTrackDurationAndUrl(track: Track): string {
+    protected async getDisplayTrackDurationAndUrl(track: Track): Promise<string> {
         const formattedDuration = this.getFormattedDuration(track);
-        const formattedUrl = this.getFormattedTrackUrl(track);
+        const formattedUrl = await this.getFormattedTrackUrl(track);
 
         return `${formattedDuration} ${formattedUrl}`;
     }
